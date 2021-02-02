@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Nav } from "rsuite";
 import { fetchProjects, setCurrentPanel } from "../actions/index";
 
-const LeftNav = ({ fetchProjects, projects, user_data, setCurrentPanel }) => {
+const LeftNav = ({ fetchProjects, projects, user_data, setCurrentPanel, setView }) => {
   useEffect(() => {
     fetchProjects(user_data.username, user_data.user_id);
   }, []);
@@ -26,7 +26,7 @@ const LeftNav = ({ fetchProjects, projects, user_data, setCurrentPanel }) => {
         <Nav.Item eventKey={null}> </Nav.Item>
         <Nav.Item eventKey="home">Home</Nav.Item>
         {projects.map((project) => (
-          <Nav.Item eventKey={project.project_title}>
+          <Nav.Item eventKey={project.project_id}>
             {project.project_title}
           </Nav.Item>
         ))}
@@ -39,6 +39,7 @@ const LeftNav = ({ fetchProjects, projects, user_data, setCurrentPanel }) => {
   const handleSelect = (active) => {
     setActive(active);
     setCurrentPanel(active)
+    setView(active)
   };
 
   return (

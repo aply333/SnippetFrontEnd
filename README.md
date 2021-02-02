@@ -31,6 +31,36 @@ Logs Table:
 1. [January 26th](#jan26) : Built Login/Register Page and Forms.
 2. [January 30th](#jan30) : Routes and Scaffolding.
 3. [January 31st](#jan30) : Extened Redux, Further Back-End Connections.
+4. [February 1st][#feb1] : Scaffold Projects and extended redux state.
+
+---
+
+### <a name="feb1">February 1st 2021</a>:
+
+- Began Scaffold of Project Pages.
+  - Scaffoled out segment navigation.
+    - on load it will call the `fetchCodeSection(u_name, name , project)`.
+    - This will fill out the relevant code section.
+    - I had to tweak the first navigation pane to get components to render correctly.
+      - Redux will not refresh components on change, I decided to simply add a state variable in the parent component that will update with the redux change as needed.
+        - There may be cleaner solutions, but for what was needed this was quick and works reliably.
+  - Extended Redux:
+    - Action: `fetchCodeSection(username, user_id, project_id)`:
+      - Takes three arguments used to point to what section in the database we are querying.
+    - Action Types:
+      - `FETCH_SECTIONS_START`: Called on start of fetch.
+      - `FETCH_SECTIONS_SUCCESS`: Called when fetch succeeded.
+      - `FETCH_SECTIONS_FAIL`: Called if fetch fails.
+    - State: this fetch call will store in `...state, projects_data[ sections:[]]`.
+- Research for next step:
+
+> ​	The next step will be the next challenge. The next step will be to build out the code input form. Idealy I would like this to be repgresented like it would in vs-code or any other editor, syntax and all. Code editors often count and mark out their lines. I believe this will prove valuable in handling the data here.
+>
+> [Medium Tutorial](https://medium.com/@mjberman024/embedding-a-code-editor-in-your-website-using-react-ace-42e64a58507): This tutorial goes over using <u>React-Ace</u>. I believe this react-library will get me to my goal the quickest.
+>
+> ​	After this I will need to read up on how to create right click context menu's. I would like to use those to implement assigning snippets to code.
+>
+> [Plural Sight Article](https://www.pluralsight.com/guides/how-to-create-a-right-click-menu-using-react)
 
 ---
 

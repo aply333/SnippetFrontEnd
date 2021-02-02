@@ -7,9 +7,11 @@ const initialState = {
     user_data:[],
     application_state:{
         currentPanel: "home",
+        currentProjectId:"",
     },
     projects_data:{
         projects:[],
+        sections:[]
     }
 }
 
@@ -64,6 +66,28 @@ const rootReducer = (state = initialState, action) =>{
                     ...state.application_state,
                     currentPanel: action.payload
                 }
+            }
+        case actionTypes.FETCH_SECTIONS_START:
+            return{
+                ...state,
+                isFetching: true,
+                error: ""
+            }
+        case actionTypes.FETCH_SECTIONS_SUCCESS:
+            return{
+                ...state,
+                error: "",
+                isFetching: false,
+                projects_data:{
+                    ...state.projects_data,
+                    sections: action.payload
+                }
+            }
+        case actionTypes.FETCH_SECTIONS_FAIL:
+            return{
+                ...state,
+                isFetching: false,
+                error: action.payload,
             }
         default:
           return state
