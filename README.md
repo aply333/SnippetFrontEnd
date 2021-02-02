@@ -31,7 +31,7 @@ Logs Table:
 1. [January 26th](#jan26) : Built Login/Register Page and Forms.
 2. [January 30th](#jan30) : Routes and Scaffolding.
 3. [January 31st](#jan30) : Extened Redux, Further Back-End Connections.
-4. [February 1st][#feb1]  : Scaffold Projects and extended redux state.
+4. [February 1st](#feb1)  : Scaffold Projects and extended redux state.
 
 ---
 
