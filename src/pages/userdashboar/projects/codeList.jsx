@@ -9,13 +9,9 @@ const CodeList = ({ sections, user_data, ...props }) => {
   const handleSelect = (active) => {
     setActive(active);
   };
-
-  useEffect(() => {
-      fetchCodeSection(user_data.username, user_data.user_id, )
-  })
-
   return (
     <div>
+      
       <Nav
         {...props}
         vertical
@@ -24,9 +20,9 @@ const CodeList = ({ sections, user_data, ...props }) => {
         appearance="subtle"
       >
         <Nav.Item> </Nav.Item>
-        <Nav.Item eventKey="testOne">Test One</Nav.Item>
-        <Nav.Item eventKey="testTwo">Test Two</Nav.Item>
-        <Nav.Item eventKey="testThree">Test Three</Nav.Item>
+        {sections.map((section) => (
+          <Nav.Item eventKey={section.code_id}>{section.code_title}</Nav.Item>
+        ))}
       </Nav>
     </div>
   );

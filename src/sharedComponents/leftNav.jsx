@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Nav } from "rsuite";
-import { fetchProjects, setCurrentPanel } from "../actions/index";
+import { fetchProjects, setCurrentPanel, fetchCodeSection } from "../actions/index";
 
-const LeftNav = ({ fetchProjects, projects, user_data, setCurrentPanel, setView }) => {
+const LeftNav = ({
+  fetchProjects,
+  projects,
+  user_data,
+  setCurrentPanel,
+  setView,
+  fetchCodeSection
+}) => {
   useEffect(() => {
     fetchProjects(user_data.username, user_data.user_id);
   }, []);
@@ -36,10 +43,15 @@ const LeftNav = ({ fetchProjects, projects, user_data, setCurrentPanel, setView 
 
   const [active, setActive] = useState("home");
 
-  const handleSelect = (active) => {
+  function handleSelect (active) {
     setActive(active);
-    setCurrentPanel(active)
-    setView(active)
+    // await setCurrentPanel(active);
+    console.log(active)
+    setView(active);
+    if(Number.isInteger(active)){
+      console.log("fetchCalled")
+      fetchCodeSection("testUser01", user_data.user_id , active)
+    }
   };
 
   return (
@@ -54,6 +66,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchProjects, setCurrentPanel })(
-  LeftNav
-);
+export default connect(mapStateToProps, {
+  fetchProjects,
+  setCurrentPanel,
+  fetchCodeSection,
+})(LeftNav);

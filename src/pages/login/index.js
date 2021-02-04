@@ -10,12 +10,13 @@ import { useHistory } from "react-router-dom"
 function Login({ postLogin, user_data, token }) {
   const [loginDetails, setLoginDetails] = useState();
   const history = useHistory();
-  const login = (data) => {
+
+  async function login(data) {
     let credentials = {
       email: data.email,
       key: data.password,
     };
-    postLogin(endpoint.login, credentials);
+    await postLogin(endpoint.login, credentials);
     localStorage.setItem("token",token)
     history.push('/dashboard')
   };

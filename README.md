@@ -32,10 +32,99 @@ Logs Table:
 2. [January 30th](#jan30) : Routes and Scaffolding.
 3. [January 31st](#jan30) : Extened Redux, Further Back-End Connections.
 4. [February 1st](#feb1)  : Scaffold Projects and extended redux state.
+5. [February 3rd](#feb3) : Scaffold Code & Snippet Panes.
+
+---
+
+### <a name="feb3">February 3rd 2021</a>:
+
+#### What was done.
+
+- Began incorporating `react-ace`.
+  - Displays a code editor.
+  - Above said code editor, there is a menu with two drop down menus:
+    - Themes: Will allows user to select what the color scheme they wishes to view the code/text in.
+    - Editor Mode: Will allow user to set what is the appropriate syntaxing is needed for the code, ie: 
+      - JavaScript
+      - Python
+      - Java
+      - Plain Text
+        - Theres more now.
+  - Figured out how to create code highlights, then implemented. Reference my experiment/reseach to see how I got there.
+    - From `react-ace`, `onSelectionChange`: it grab the start and end points of the selection.
+    - This will then update a state object, that will dictate `react-ace`, to place a `marker` on it.
+      - `marker`: its a property of react-ace, it can take an array of objects.
+  - There is a menu option above the code-editor, + Set Snippet , this will pop up a `Modal` from `rsuite` and will let the user style, name, and describe the highlighted code. 
+- Snippet Pane:
+  - Built basic components out, now displays:
+    - Code/Snippet Title
+      - Description section for entirety of code.
+    - Snippet Section.
+      - Built Snippet Card:
+        - Title of snippet.
+        - Description for said snippet.
+- <span style="color:red">Current Bugs, some on back burner</span>
+  - *Login takes two clicks to function --> should work on one.*
+    - Might be in need of async functionality or move fetch call seperate from login function.
+  - *On dashboard:*
+    - Defaults to empty pane when it should default to the home pane.
+      - The if/else turnery function might be the issue:
+        - Reset the criteria from, if not home to if not Integer.
+        - The home pane should be the only time a string is used to dictate what is displayed. All the rest are the `project_id` redux-state object.
+
+> **Testing/Experimenting:**
+>
+> ​	Right now I am playing around with react-ace; console.logging the inputs and messing with the properties dictated in the documentation found on their [git-hub repo](https://github.com/securingsincity/react-ace/blob/master/docs/Ace.md). 
+>
+> What I need to know.
+>
+>  1. How does this custom textEditor/form return its values.
+>
+>  2. How can I break this into usable information.
+>
+>      	1. How does my database need to structure in/out data here.
+>      	2. How do I load pre-existing code.
+>      	3. Is there a way for me to point to specific lines of code.
+>
+>  3. **Not priority but curious:**
+>
+>      	1. Can I set up a file upload to autopopulate the editor?
+>      	2. Can I create a download to so useres can incorporate changes made here to their code.
+>
+>     ##### For now, the use will be just to copy and paste. Let's get functionality first then move to convenience. 
+>
+> Once I figure these things, I believe I should be able to complete MVP. At which point I can go from feature creation to refinement and code clean up.
+>
+> Resources Found: 
+>
+> ​	[Ace's official documantion....  I think](https://ace.c9.io/#nav=api&api=selection)
+
+#### What needs to be done
+
+> I have largely scaffolded out the code editor and snippet creation. Also started to scaffold the snippet pane itself.
+>
+> 1. Need to fix color picker.
+>
+> 2. On the back-end:
+>
+>    1. Change Lines/Snippet tables, the way I envisioned their relationship is overly complicated. And now knowing how I can work with react-ace I can simplify its function.
+>       1. Lines will be renamed to "raw-input".
+>       2. Snippets will know contain their start and end points they refer too.
+>
+>    2. Next I need to update seed data to match the new database structure.
+>    3. Create routes to pull *"Raw-Code"* and *"Snippets"*
+>
+> 3. Then I will need to build the connection to the front-end, and update redux reducer accordingly.
+>
+> 4. Flesh out input/change forms. Figure out how I want to structure code being sent back to the backend.
+>
+> 5. Finally I need to move onto creating routes and models to uploading new information to the backend.
 
 ---
 
 ### <a name="feb1">February 1st 2021</a>:
+
+#### What was done:
 
 - Began Scaffold of Project Pages.
   - Scaffoled out segment navigation.
@@ -52,7 +141,8 @@ Logs Table:
       - `FETCH_SECTIONS_SUCCESS`: Called when fetch succeeded.
       - `FETCH_SECTIONS_FAIL`: Called if fetch fails.
     - State: this fetch call will store in `...state, projects_data[ sections:[]]`.
-- Research for next step:
+
+#### Research for next step:
 
 > ​	The next step will be the next challenge. The next step will be to build out the code input form. Idealy I would like this to be repgresented like it would in vs-code or any other editor, syntax and all. Code editors often count and mark out their lines. I believe this will prove valuable in handling the data here.
 >
@@ -61,6 +151,43 @@ Logs Table:
 > ​	After this I will need to read up on how to create right click context menu's. I would like to use those to implement assigning snippets to code.
 >
 > [Plural Sight Article](https://www.pluralsight.com/guides/how-to-create-a-right-click-menu-using-react)
+
+#### Experiment Notes:
+
+> <u>Handling Selection:</u>
+>
+> ​	The documentation says to use `onCursorChange` or `onSelectionChange`.
+>
+> : `onCursorChange` :
+>
+> ​	1. So far I see no difference between this and `onSelectionChange`. If that is the case I'll use `onSelectionChange` simply because the name better represents what I want to happen.
+>
+> : `onSelectionChange` : 
+>
+>  	1. Returns a large object of information relevant to the selection.
+>       	1. I see within the log, there is a row/column value this might be how I can go about pointing to snippet data.
+>
+> 2. It can get a bit overwhelming using this option, but it might be more responsive to interaction.
+>    1. When Logging I am bombarding with each bit of selection.
+>    2. It may be better to just have code stored in a single item on the `code_tabe` on the backend.
+>       1. Looks like ace will note rows and columns, I could attach that information to the `snippet_table`. Hopefully this will also simplify how it is currently done, and make connections between them much easier, let ace handle the code and I just work off of it.
+>    3. I see a cursor object and an anchor object, I think this Is where I can find where the selection starts and ends. Another end point might be the "lead" value.
+>
+> : `markers`:
+>
+> 1. This will take an object.
+>
+> ```javascript
+> const exampleMarkerObject = [{
+> 	startRow: 0,
+>   startCol: 3,
+>   endRow: 3,
+>   endCol: 20,
+>   className:"SampleCSSClassName"
+> }]
+> ```
+>
+> 2. This is how I will be able to display connections between snippets and their code piece counter part.
 
 ---
 
@@ -150,4 +277,5 @@ Logs Table:
 | ReactFormHooks |                      |
 | Rsuite         |                      |
 | Axios          |                      |
+| React-Ace      |                      |
 

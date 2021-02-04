@@ -54,7 +54,7 @@ export const setCurrentPanel = (desination_panel) => (dispatch) => {
 export const fetchCodeSection = (user_name, user_id, project_id) => (dispatch) => {
   dispatch({type: actionTypes.FETCH_SECTIONS_START});
   axiosAuth()
-    .get(`${root_url}/at/${user_name}/projects/${user_id}/${project_id}`)
+    .get(`${root_url}at/${user_name}/projects/${user_id}/${project_id}`)
     .then((res)=>{
       dispatch({
         type: actionTypes.FETCH_SECTIONS_SUCCESS,

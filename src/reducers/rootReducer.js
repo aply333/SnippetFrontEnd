@@ -7,7 +7,6 @@ const initialState = {
     user_data:[],
     application_state:{
         currentPanel: "home",
-        currentProjectId:"",
     },
     projects_data:{
         projects:[],

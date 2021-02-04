@@ -26,7 +26,7 @@ const BottomNav = () => {
           <Nav.Item>+ Project</Nav.Item>
           <Nav.Item>+ Code Snippet</Nav.Item>
         </Nav>
-        <Nav pullRight>
+        <Nav >
           <Nav.Item>Settings</Nav.Item>
         </Nav>
       </Navbar.Body>
