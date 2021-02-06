@@ -33,6 +33,91 @@ Logs Table:
 3. [January 31st](#jan30) : Extened Redux, Further Back-End Connections.
 4. [February 1st](#feb1)  : Scaffold Projects and extended redux state.
 5. [February 3rd](#feb3) : Scaffold Code & Snippet Panes.
+6. [February 4th](#feb4) : Extened Redux, Began Connecting Snippets and Markers.
+7. [February 5th](#feb5) : Code Clean-up, Redux Extended, Fixed Component Mounting.
+
+---
+
+### <a name="feb4">February 5th 2021</a>:
+
+- Organized components more clearly.
+  - All Editor relevant components now live in its own folder.
+  - All Snippet Components also live in their own folder.
+- Snippet Pane now fetches and renders snippets.
+- Editor now loads code from database.
+
+> Slow Progress today, got stuck on bugs handling component render. At first thought it was an issue with my use of the `useEffect` hook. But........ it had turned out the entire time there was a minor syntax error in my reducers.
+>
+> ```javascript
+> // WRONG!! one
+> case actionTypes.SET_CURRENT_CODE:
+>      return{
+>           ...state,
+>           ...state.application_state:{
+>               currentCode: action.payload
+>              }
+>          }
+> // Correct and fixed.
+> case actionTypes.SET_CURRENT_CODE:
+>      return{
+>           ...state,
+>           application_state:{
+>                ...state.application_state,
+>               currentCode: action.payload
+>              }
+>          }
+> ```
+>
+> - Kicking myself in the head here, not that I didn't know, this is syntaxing I know but somehow slipped through. 
+> - Note to self, track how long I try to find a solution in one area.... look else where if its takes to long, and see if the error is elsewhere.
+>
+> ---
+>
+> Another note: My redux rootReducer is getting increddibly long at this point, it is time to look into it and break it into separate parts. This should help me catch errors like I had before quicker down the line.
+>
+> - I split up the actions, I will want to mirror how those files are brocken apart. 
+>   - `actionTypes.js [SET_SOMETHING]` <--->  `applicationActions.js`  <--->  `applicationReducers`
+>   - `actionTypes.js [FETCH_SOMETHING]` <--->  `fetchActions.js` <---> `fetchReducer`
+>   - Continues for `post`,` put`,` delete`.
+> - These are not implemented just where my thoughts are leading me at this momment.
+
+
+
+### <a name="feb4">February 4th 2021</a>:
+
+#### What was done.
+
+- Restructure and Added to Redux State.
+  - Moved action types to its own file, `actionTypes`.
+  - Split actions to their own files but still export through `action/index.js`.
+  - All fetch actions moved to to `fetchActions.js`.
+  - `initialState` now is in its own file, simply makes it easier to see what value is going where.
+  - Added cases for markers and snippet actions.
+- Seperated out snippet component to its own file.
+- Connected `CodeList` and `SnippetPane`:
+  - In `CodeList`:
+    - `fetchCalls(active)`: This will call the fetch actions related to markers and snippets.
+      - This gets called inside the `handleSelect` function on the nav component.
+  - In `SnippetPane`: connected snippet store.
+
+> Most work was done on the backend today. Tables were restructured and now will better reflect how react-ace.
+
+- Scaffolded out new snippet component, basic scoffold but now have something for creating new snippets.
+- Other tweaks:
+  - Fixed `BottomNav`.
+    - Settings now pulls right, there was an uneeded `display: "flex"` line left over, overiding `pullRight` attribute.
+    - Added a location to add project/account settings to live. Accessed when setting is clicked.
+
+#### Current Challenges:
+
+> 1. Connecting snippets is cuasing a render error. I believe I need to convert components to load asynchronously. Redux state is updating after the component auctully loads causing the error.
+>    1. This seems to be happening aswell with the initialvalue portion of the code editor.
+> 2. Still having the login issue with it taking a couple of clicks to load, might want to review how state is handled.
+> 3. On initial login, the wrong component appears. It renders an empty project view, where it should render the home screen.
+>
+> #####  Follow up:
+>
+> ​	*USE EFFECT* that I need to review. Pretty sure I can improve my other code and fix the bugs if better understand how to use it and where to use it.
 
 ---
 

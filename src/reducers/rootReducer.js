@@ -1,18 +1,5 @@
-import {actionTypes} from "../actions/index"
-
-const initialState = {
-    isFetching: false,
-    error: "",
-    token:[],
-    user_data:[],
-    application_state:{
-        currentPanel: "home",
-    },
-    projects_data:{
-        projects:[],
-        sections:[]
-    }
-}
+import { actionTypes } from "../actions/actionsTypes";
+import initialState from "./initialState";
 
 const rootReducer = (state = initialState, action) =>{
     switch (action.type) {
@@ -87,6 +74,66 @@ const rootReducer = (state = initialState, action) =>{
                 ...state,
                 isFetching: false,
                 error: action.payload,
+            }
+        case actionTypes.FETCH_MARKERS_START:
+            return{
+                ...state,
+                isFetching: true,
+                error: ""
+            }
+        case actionTypes.FETCH_MARKERS_SUCCESS:
+            return{
+                ...state,
+                isFetching: false,
+                error: "",
+                projects_data: {
+                    ...state.projects_data,
+                    markers: action.payload
+                }
+            }
+        case actionTypes.FETCH_MARKERS_FAIL:
+            return{
+                ...state,
+                isFetching: false,
+                error: action.payload
+            }
+        case actionTypes.FETCH_SNIPPETS_START:
+            return{
+                ...state,
+                isFetching: true,
+                error: ""
+            }
+        case actionTypes.FETCH_SNIPPETS_SUCCESS:
+            return{
+                ...state,
+                isFetching: false,
+                error:"",
+                projects_data:{
+                    ...state.projects_data,
+                    snippets: action.payload
+                }
+            }
+        case actionTypes.FETCH_SNIPPETS_FAIL:
+            return{
+                ...state,
+                isFetching: false,
+                error: action.payload
+            }
+        case actionTypes.SET_CURRENT_CODE:
+            return{
+                ...state,
+                application_state:{
+                    ...state.application_state,
+                    currentCode: action.payload
+                }
+            }
+        case actionTypes.SET_CURRENT_CODE_ID:
+            return{
+                ...state,
+                application_state:{
+                    ...state.application_state,
+                    currentCodeID: action.payload
+                }
             }
         default:
           return state

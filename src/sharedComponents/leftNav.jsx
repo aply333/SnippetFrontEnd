@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Nav } from "rsuite";
-import { fetchProjects, setCurrentPanel, fetchCodeSection } from "../actions/index";
+import {
+  fetchProjects,
+  setCurrentPanel,
+  fetchCodeSection,
+} from "../actions/index";
 
 const LeftNav = ({
   fetchProjects,
@@ -9,7 +13,7 @@ const LeftNav = ({
   user_data,
   setCurrentPanel,
   setView,
-  fetchCodeSection
+  fetchCodeSection,
 }) => {
   useEffect(() => {
     fetchProjects(user_data.username, user_data.user_id);
@@ -33,7 +37,7 @@ const LeftNav = ({
         <Nav.Item eventKey={null}> </Nav.Item>
         <Nav.Item eventKey="home">Home</Nav.Item>
         {projects.map((project) => (
-          <Nav.Item eventKey={project.project_id}>
+          <Nav.Item eventKey={project.project_id} key={project.project_i}>
             {project.project_title}
           </Nav.Item>
         ))}
@@ -43,16 +47,14 @@ const LeftNav = ({
 
   const [active, setActive] = useState("home");
 
-  function handleSelect (active) {
+  function handleSelect(active) {
     setActive(active);
-    // await setCurrentPanel(active);
-    console.log(active)
+    setCurrentPanel(active);
     setView(active);
-    if(Number.isInteger(active)){
-      console.log("fetchCalled")
-      fetchCodeSection("testUser01", user_data.user_id , active)
+    if (Number.isInteger(active)) {
+      fetchCodeSection("testUser01", user_data.user_id, active);
     }
-  };
+  }
 
   return (
     <NavContents appearance="tabs" active={active} onSelect={handleSelect} />

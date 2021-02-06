@@ -5,7 +5,8 @@ import SignUp from "./signUp";
 import { connect } from "react-redux";
 import { postLogin } from "../../actions/index";
 import { endpoint } from "../../endpoints/index";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
+import { loginBounds, button_styles } from "./loginConst";
 
 function Login({ postLogin, user_data, token }) {
   const [loginDetails, setLoginDetails] = useState();
@@ -17,20 +18,9 @@ function Login({ postLogin, user_data, token }) {
       key: data.password,
     };
     await postLogin(endpoint.login, credentials);
-    localStorage.setItem("token",token)
-    history.push('/dashboard')
-  };
-  const signUpHandler = (data) => {};
-
-  const loginBounds = {
-    margin: "15rem auto",
-    width: "15rem",
-  };
-
-  const button_styles = {
-    width: "5rem",
-    marginBottom: "0.5rem",
-  };
+    localStorage.setItem("token", token);
+    history.push("/dashboard");
+  }
 
   return (
     <div style={loginBounds}>
@@ -55,18 +45,6 @@ function Login({ postLogin, user_data, token }) {
       >
         <button className="secondaryButton">Sign-Up</button>
       </Whisper>
-
-      <br />
-      <br />
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          localStorage.setItem("test", "test on log")
-          console.log(loginDetails, "userdata: ", user_data);
-        }}
-      >
-        Console Log
-      </button>
     </div>
   );
 }
@@ -74,7 +52,7 @@ function Login({ postLogin, user_data, token }) {
 const mapStateToProps = (state) => {
   return {
     user_data: state.user_data,
-    token: state.token
+    token: state.token,
   };
 };
 

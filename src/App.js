@@ -2,7 +2,7 @@ import Login from "./pages/login";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'rsuite/dist/styles/rsuite-default.css';
 import './sharedComponents/SharedStyles.css'
-import UserDashboard from "./pages/userdashboar";
+import UserDashboard from "./pages/userdashboard";
 import PrivateRoute from "./sharedComponents/privateRoute";
 
 function App() {
