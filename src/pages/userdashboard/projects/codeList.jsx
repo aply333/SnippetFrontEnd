@@ -11,6 +11,7 @@ const CodeList = ({
   sections,
   user_data,
   setCurrentCode,
+  setCurrentCodeId,
   cIndex,
   ...props
 }) => {

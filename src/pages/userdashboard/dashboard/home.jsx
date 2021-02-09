@@ -14,7 +14,7 @@ const Home = ({ projects }) => {
     <div style={homeContainer}>
       <div className="leftSide">
         <Panel shaded bordered bodyFill>
-          <img style={imgStyles} src="https://via.placeholder.com/500" />
+          <img style={imgStyles} src="https://via.placeholder.com/500" alt="user profile image"/>
           <Panel header="Latest Changes">
             <ProjectTable />
           </Panel>

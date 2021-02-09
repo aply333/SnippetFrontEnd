@@ -20,9 +20,7 @@ function UserDashboard({ currentPanel }) {
       <div style={{ display: "flex" }}>
         <LeftNav setView={setView} />
         <div style={contentContainer}>
-          {/* {view === "home" ? <Home /> : <ProjectView />} */}
-          {/* <Home /> */}
-          <ProjectView/>
+          {view === "home" ? <Home/> : <ProjectView />}
         </div>
       </div>
       <BottomNav />

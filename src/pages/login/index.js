@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import { postLogin } from "../../actions/index";
 import { endpoint } from "../../endpoints/index";
 import { useHistory } from "react-router-dom";
-import { loginBounds, button_styles } from "./loginConst";
+import { loginBounds } from "./loginConst";
 
-function Login({ postLogin, user_data, token }) {
+function Login({ postLogin, token }) {
   const [loginDetails, setLoginDetails] = useState();
   const history = useHistory();
 
@@ -18,15 +18,15 @@ function Login({ postLogin, user_data, token }) {
       key: data.password,
     };
     await postLogin(endpoint.login, credentials);
-    localStorage.setItem("token", token);
+    await localStorage.setItem("token", token);
     history.push("/dashboard");
   }
+
 
   return (
     <div style={loginBounds}>
       <LoginForm
         setLoginDetails={setLoginDetails}
-        button_styles={button_styles}
         login={login}
       />
       <Whisper
@@ -51,7 +51,7 @@ function Login({ postLogin, user_data, token }) {
 
 const mapStateToProps = (state) => {
   return {
-    user_data: state.user_data,
+    isFetching: state.isFetching,
     token: state.token,
   };
 };

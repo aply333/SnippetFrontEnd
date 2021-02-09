@@ -13,7 +13,8 @@ const initialState = {
         projects:[],
         sections:[],
         markers:[],
-        snippets:[]
+        snippets:[],
+        tags:[]
     }
 }
 

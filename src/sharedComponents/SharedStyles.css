@@ -65,6 +65,40 @@ label{
     display: inline;
 }
 
+/* Marker Classes */
+.lightblue{
+    background-color: #A4DDEE ;
+    position: absolute;
+}
+.yellow{
+    background-color: #FFD700 ;
+    position: absolute;
+}
+.palegreen{
+    background-color: #8DC5A4;
+    position: absolute;
+}
+.orange{
+    background-color: #ffa500 ;
+    position: absolute;
+}
+.gold{
+    background-color: #E7D46A ;
+    position: absolute;
+}
+.lavender{
+    background-color: #C6AEC7;
+    position: absolute;
+}
+.paleyellow{
+    background-color: #F3EAC3;
+    position: absolute;
+}
+.turquoise{
+    background-color: #40E0D0 ;
+    position: absolute;
+}
+
 /* TEST CLASSES TBD */
 
 .markerTest{

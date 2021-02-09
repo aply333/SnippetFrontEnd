@@ -5,6 +5,9 @@ import {
   fetchProjects,
   setCurrentPanel,
   fetchCodeSection,
+  setCurrentCode,
+  fetchProjectTags,
+  setCurrentCodeId
 } from "../actions/index";
 
 const LeftNav = ({
@@ -14,6 +17,9 @@ const LeftNav = ({
   setCurrentPanel,
   setView,
   fetchCodeSection,
+  setCurrentCode,
+  fetchProjectTags,
+  setCurrentCodeId
 }) => {
   useEffect(() => {
     fetchProjects(user_data.username, user_data.user_id);
@@ -37,7 +43,7 @@ const LeftNav = ({
         <Nav.Item eventKey={null}> </Nav.Item>
         <Nav.Item eventKey="home">Home</Nav.Item>
         {projects.map((project) => (
-          <Nav.Item eventKey={project.project_id} key={project.project_i}>
+          <Nav.Item eventKey={project.project_id} key={project.project_id}>
             {project.project_title}
           </Nav.Item>
         ))}
@@ -48,11 +54,14 @@ const LeftNav = ({
   const [active, setActive] = useState("home");
 
   function handleSelect(active) {
+    setCurrentCode("")
     setActive(active);
     setCurrentPanel(active);
     setView(active);
+    setCurrentCodeId("overview")
     if (Number.isInteger(active)) {
-      fetchCodeSection("testUser01", user_data.user_id, active);
+      fetchCodeSection( user_data.username, user_data.user_id, active);
+      fetchProjectTags( user_data.username, user_data.user_id, active);
     }
   }
 
@@ -72,4 +81,7 @@ export default connect(mapStateToProps, {
   fetchProjects,
   setCurrentPanel,
   fetchCodeSection,
+  fetchProjectTags,
+  setCurrentCode,
+  setCurrentCodeId
 })(LeftNav);

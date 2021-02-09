@@ -23,8 +23,7 @@ const EditorMenu = ({ snippets, setSnippets, selected, editorMode, theme }) => {
     });
   };
 
-  function snippetHandler(location) {
-    open();
+  function snippetHandler(location, colorClass) {
     setSnippets([
       ...snippets,
       {
@@ -32,7 +31,7 @@ const EditorMenu = ({ snippets, setSnippets, selected, editorMode, theme }) => {
         startCol: location[0].column,
         endRow: location[1].row,
         endCol: location[1].column,
-        className: "markerTest2",
+        className: colorClass,
         snippet_id: 1,
       },
     ]);
@@ -42,7 +41,11 @@ const EditorMenu = ({ snippets, setSnippets, selected, editorMode, theme }) => {
     <>
       <Modal backdrop={newSnippetMenu.backdrop} show={newSnippetMenu.show}>
         <Modal.Title>Create New Snippet</Modal.Title>
-        <NewSnippetForm close={close} />
+        <NewSnippetForm
+          snippetHandler={snippetHandler}
+          location={selected}
+          close={close}
+        />
       </Modal>
       <div
         style={{
@@ -54,13 +57,7 @@ const EditorMenu = ({ snippets, setSnippets, selected, editorMode, theme }) => {
         }}
       >
         <Nav>
-          <Nav.Item
-            onClick={() => {
-              snippetHandler(selected);
-            }}
-          >
-            + Set Snippet
-          </Nav.Item>
+          <Nav.Item onClick={open}> + Set Snippet</Nav.Item>
         </Nav>
         <Nav>
           <Dropdown title={theme}>

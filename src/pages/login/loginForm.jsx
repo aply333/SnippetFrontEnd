@@ -1,11 +1,14 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { button_styles } from "./loginConst";
 
-const LoginForm = ({ setLoginDetails, button_styles, login }) => {
+const LoginForm = ({ setLoginDetails, login }) => {
+  
   const { register, handleSubmit } = useForm();
-  const submitHandler = (data) => {
+  async function submitHandler  (data) {
     setLoginDetails(data);
-    login(data);
+    await login(data);
+    
   };
 
   const form_layout = {
@@ -35,8 +38,8 @@ const LoginForm = ({ setLoginDetails, button_styles, login }) => {
         name="password"
         ref={register}
       />
-      <button className="primaryButton" style={button_styles}>
-        Login
+      <button className="primaryButton" style={button_styles} >
+       Login
       </button>
     </form>
   );

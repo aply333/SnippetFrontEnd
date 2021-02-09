@@ -69,3 +69,17 @@ export const fetchCodeSnippets = (user_name, user_id, project_id, code_id) => (
       dispatch({ type: actionTypes.FETCH_SNIPPETS_FAIL, payload: err })
     );
 };
+
+export const fetchProjectTags = (username, user_id, project_id) => (
+  dispatch
+) => {
+  dispatch({ type: actionTypes.FETCH_TAGS_START });
+  axiosAuth()
+    .get(`${root_url}at/${username}/projects/${user_id}/tags/${project_id}`)
+    .then((res) => {
+      dispatch({ type: actionTypes.FETCH_TAGS_SUCCESS, payload: res.data });
+    })
+    .catch((err) => 
+      dispatch({ type: actionTypes.FETCH_TAGS_FAIL, payload: err })
+    );
+};

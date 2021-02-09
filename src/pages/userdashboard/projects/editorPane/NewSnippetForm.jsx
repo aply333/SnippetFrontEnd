@@ -1,50 +1,102 @@
+import React, { useState } from "react";
 import { Divider, TagGroup, Tag } from "rsuite";
-import InputColor from "react-input-color";
+import { colorChoices, snippetFormStyle, formContainer } from "./editorConst";
+import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
 
-const NewSnippetForm = ({ close }) => {
+const NewSnippetForm = ({ snippetHandler, location, close, tags }) => {
+  const { register, handleSubmit } = useForm();
+  const [snipColor, setSnipColor] = useState("yellow");
+  const submitNewSnippet = (data) => {
+    console.log(data);
+    snippetHandler(location, snipColor);
+    close();
+  };
+
   return (
     <div>
       <Divider />
-      <p>Sample Snippet text.</p>
+      <p style={{ backgroundColor: snipColor }}>Sample Snippet text.</p>
       <Divider />
-      <div style={{ display: "flex", flexFlow: "row" }}>
+      <div style={formContainer}>
         <div style={{ width: "48%" }}>
-          <form style={{ display: "flex", flexFlow: "column" }}>
+          <form
+            onSubmit={handleSubmit(submitNewSnippet)}
+            style={snippetFormStyle}
+          >
             <label>Title: </label>
-            <input type="text" placeholder="name for snippet" />
+            <input
+              name="title"
+              type="text"
+              placeholder="name for snippet"
+              ref={register}
+            />
             <label>Description:</label>
-            <textarea style={{ height: "8rem" }} />
+            <textarea
+              name="description"
+              style={{ height: "8rem" }}
+              ref={register}
+            />
+            <button
+              className="primaryButton"
+              style={{
+                width: "6rem",
+                marginRight: "0.5rem",
+                marginTop: "1rem",
+              }}
+            >
+              Set Snippet
+            </button>
           </form>
         </div>
-        <Divider style={{ height: "12rem" }} vertical />
+        <Divider style={{ height: "15rem" }} vertical />
         <div style={{ width: "48%" }}>
           <TagGroup style={{ margin: "0.5 auto" }}>
-              {/* Need to Refactor from database. */}
-            <Tag color="red">Tag One</Tag>
-            <Tag color="blue">Tag One</Tag>
-            <Tag color="orange">Tag One</Tag>
-            <Tag color="green">Tag One</Tag>
-            <Tag color="cyan">Tag One</Tag>
-            <Tag color="violet">Tag One</Tag>
+            {tags.map((tag) => {
+              if (tag.tag_text != null) {
+                return (
+                  <Tag
+                    key={tag.tag_id}
+                    style={{ position: "relative", cursor: "pointer" }}
+                    className={tag.color}
+                    onClick={()=>{setSnipColor(tag.color)}}
+                  >
+                    {tag.tag_text}
+                  </Tag>
+                );
+              }
+            })}
           </TagGroup>
-          <Divider style={{ width: "100%" }}>
+          <Divider style={{ marginBottom: " 0.3rem", width: "100%" }}>
             <h2>or</h2>
           </Divider>
           <div>
-            <p>Pick a Color:</p>
-            <InputColor initialValue="#ffffff" placement="right" />
+            <p style={{ marginBottom: "0.3rem" }}>Pick a Color:</p>
+            <TagGroup>
+              {colorChoices.map((color) => (
+                <Tag
+                  key={Math.random() * 20}
+                  style={{
+                    backgroundColor: color.hex,
+                    color: "black",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setSnipColor(color.colorClass);
+                  }}
+                >
+                  {color.name}
+                </Tag>
+              ))}
+            </TagGroup>
           </div>
         </div>
       </div>
       <Divider />
-      <button
-        className="primaryButton"
-        style={{ width: "6rem", marginRight: "0.5rem" }}
-      >
-        Set Snippet
-      </button>
+
       <button
         className="secondaryButton"
+        style={{ marginLeft: "85%" }}
         onClick={(e) => {
           e.preventDefault();
           close();
@@ -56,4 +108,10 @@ const NewSnippetForm = ({ close }) => {
   );
 };
 
-export default NewSnippetForm;
+const mapStateToProps = (state) => {
+  return {
+    tags: state.projects_data.tags,
+  };
+};
+
+export default connect(mapStateToProps, {})(NewSnippetForm);

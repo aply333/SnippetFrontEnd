@@ -23,12 +23,14 @@ const rootReducer = (state = initialState, action) =>{
                 isFetching: false,
                 error: action.payload
             }
-        case actionTypes.FETCH_PROJECTS_START:
+        case actionTypes.POST_PROJECT_START:
+        case actionTypes.FETCH_PROJECTS_START :
             return{
                 ...state,
                 isFetching: true,
                 error: ""
             }
+        case actionTypes.POST_PROJECT_SUCCESS:
         case actionTypes.FETCH_PROJECTS_SUCCESS:
             return{
                 ...state,
@@ -39,6 +41,7 @@ const rootReducer = (state = initialState, action) =>{
                     projects: action.payload
                 }
             }
+        case actionTypes.POST_PROJECT_FAIL:
         case actionTypes.FETCH_PROJECTS_FAIL:
             return{
                 ...state,
@@ -53,12 +56,14 @@ const rootReducer = (state = initialState, action) =>{
                     currentPanel: action.payload
                 }
             }
+        case actionTypes.POST_CODE_START:
         case actionTypes.FETCH_SECTIONS_START:
             return{
                 ...state,
                 isFetching: true,
                 error: ""
             }
+        case actionTypes.POST_CODE_SUCCESS:
         case actionTypes.FETCH_SECTIONS_SUCCESS:
             return{
                 ...state,
@@ -69,6 +74,7 @@ const rootReducer = (state = initialState, action) =>{
                     sections: action.payload
                 }
             }
+        case actionTypes.POST_CODE_FAIL:
         case actionTypes.FETCH_SECTIONS_FAIL:
             return{
                 ...state,
@@ -134,6 +140,28 @@ const rootReducer = (state = initialState, action) =>{
                     ...state.application_state,
                     currentCodeID: action.payload
                 }
+            }
+        case actionTypes.FETCH_TAGS_START:
+            return{
+                ...state,
+                isFetching: true,
+                error: ""
+            }
+        case actionTypes.FETCH_TAGS_SUCCESS:
+            return{
+                ...state,
+                isFetching: false,
+                error: "",
+                projects_data:{
+                    ...state.projects_data,
+                    tags: action.payload
+                }
+            }
+        case actionTypes.FETCH_TAGS_FAIL:
+            return{
+                ...state,
+                isFetching: false,
+                error: action.payload
             }
         default:
           return state

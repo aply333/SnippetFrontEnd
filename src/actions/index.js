@@ -21,3 +21,4 @@ export const postLogin = (url, credentials) => (dispatch) => {
 
 export * from "./fetchActions";
 export * from "./applicationActions";
+export * from "./postActions";

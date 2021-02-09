@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 
 const Editor = ({ sections, markers, cIndex }) => {
   const editorStyle = {
-    width: "35rem",
     height: "85vh",
+    width: "100%",
   };
 
   function onSelection(selection) {
@@ -20,24 +20,45 @@ const Editor = ({ sections, markers, cIndex }) => {
       row: selection.lead.row,
       column: selection.lead.column,
     };
-    setSelected([start, end]);
+    if(start.row > end.row){
+      setSelected([end, start])
+    }else{
+     setSelected([start, end]);  
+    }
+   
   }
 
   const [displayed, setDisplayed] = useState(" ");
 
   useEffect(() => {
     if(sections !== [] && cIndex !== ""){
-       setDisplayed(sections[cIndex].raw_code); 
+       setDisplayed(sections[cIndex].raw_code);
+       setSnippets([])
+       markers.map(mark =>{
+         setSnippets([
+          ...snippets,
+          {
+            startRow: mark.startRow,
+            startCol: mark.startCol,
+            endRow: mark.endRow,
+            endCol: mark.endCol,
+            className: mark.color
+          }
+         ])
+       }) 
+    }else{
+       setSnippets([ ])
+       setDisplayed(" ")
     }
   }, [cIndex, sections]);
 
   const [editorMode, setEditorMode] = useState("javascript");
   const [theme, setTheme] = useState("gitHub");
   const [selected, setSelected] = useState();
-  const [snippets, setSnippets] = useState(markers);
+  const [snippets, setSnippets] = useState([]);
 
   return (
-    <div style={{ marginLeft: "0.5rem" }}>
+    <div style={{ marginLeft: "0.5rem" , width: "55%"}}>
       <EditorMenu
         snippets={snippets}
         setSnippets={setSnippets}

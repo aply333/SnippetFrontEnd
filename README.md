@@ -35,6 +35,35 @@ Logs Table:
 5. [February 3rd](#feb3) : Scaffold Code & Snippet Panes.
 6. [February 4th](#feb4) : Extened Redux, Began Connecting Snippets and Markers.
 7. [February 5th](#feb5) : Code Clean-up, Redux Extended, Fixed Component Mounting.
+8. [February 6th](#feb) : Gerneral Debugging
+9. [February 8th](#feb8) : Began Connecting data posting. 
+
+---
+
+### <a name="feb8">February 8th 2021</a>:
+
+- On `bottomNav.jsx`:
+  - `+Projects` :
+    - Pulls a drawer from the bottom, showing a simple form where a user can assign the new Project's name.
+    - If nothing is entered, and commit is hit, nothing happens.
+    - If something is entered, a redux action `postNewProject` is called.
+      - Case: `POST_PROJECT_"START|SUCESS|FAIL`
+      - This reuses the initial reducer action from the project fetch.
+  - `+Code`:
+    - Pulls a drawer from the button showing a simple form for title and description.
+    - If nothing is entered on commit, nothing happens.
+    - If something is entered, a redux action `postNewCode`
+      - Case: `POST_CODE_"START|SUCCESS|FAIL"`
+      - This reuses the initial reducer from the code fetch reducer.
+  - In both the database will send back an updated table of the update, and this will be set over the old data in redux. 
+
+---
+
+### <a name="feb6">February 6th 2021</a>:
+
+- Fournd a bug when swapping between projects:
+  - old state would cause a crash, specically when the amount of contents are mismatched.
+    - Now it resets between swaps to a default state.
 
 ---
 
